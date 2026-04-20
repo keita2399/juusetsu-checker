@@ -38,7 +38,7 @@ export function AnalyzingScreen({ onDone }: AnalyzingScreenProps) {
       padding:'60px 24px 32px',
     }}>
       <div style={{ display:'flex', alignItems:'center', justifyContent:'center', padding:'16px 0 40px' }}>
-        <div style={{ fontFamily:FONT_DISP, fontSize:22, fontWeight:900, color:BRAND.navyD }}>重説チェッカー</div>
+        <div style={{ fontFamily:FONT_DISP, fontSize:22, fontWeight:900, color:BRAND.navyD }}>不動産書類チェッカー</div>
       </div>
 
       {/* Document illustration */}

@@ -65,7 +65,7 @@ export function PrintLayout({ result: d }: PrintLayoutProps) {
 
       {/* Footer */}
       <div style={{ marginTop:24, paddingTop:10, borderTop:'1px solid #ddd', fontSize:10, color:'#999', textAlign:'center' }}>
-        このレポートは重説チェッカーにより自動生成されました。正式な法律文書ではありません。必ず担当者に直接ご確認ください。
+        このレポートは不動産書類チェッカーにより自動生成されました。正式な法律文書ではありません。必ず担当者に直接ご確認ください。
       </div>
     </div>
   );
