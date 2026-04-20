@@ -220,6 +220,31 @@ export function TopScreen({ onStart }: TopScreenProps) {
             アップロードされたファイルは解析後すぐに削除されます。社外に保存されません。
           </div>
 
+          {/* Supported doc types */}
+          <div style={{ marginTop:40, borderTop:`1px solid ${BRAND.border}`, paddingTop:32 }}>
+            <div style={{ fontSize:12, fontWeight:700, color:BRAND.ink400, letterSpacing:'.06em', textAlign:'center', marginBottom:16 }}>
+              対応している書類
+            </div>
+            <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:8 }}>
+              {([
+                { label:'重要事項説明書', desc:'売買・賃貸契約前の法定書類。法的制限・手付金・設備状況を確認' },
+                { label:'賃貸借契約書',   desc:'特約・退去費用・更新料・解約予告・禁止事項を確認' },
+                { label:'登記簿謄本',     desc:'抵当権・差押え・仮登記・所有者の一致を確認' },
+                { label:'不動産売買契約書', desc:'譲渡所得の計算。取得費・売却価格・税額を自動試算' },
+                { label:'収支内訳書',     desc:'不動産所得の申告。家賃収入・必要経費・減価償却を整理' },
+              ] as { label: string; desc: string }[]).map((d, i) => (
+                <div key={i} style={{
+                  padding:'12px 14px', borderRadius:12,
+                  border:`1px solid ${BRAND.border}`, background:'#fff',
+                  ...(i === 4 ? { gridColumn:'1 / -1' } : {}),
+                }}>
+                  <div style={{ fontSize:13, fontWeight:700, color:BRAND.ink700, marginBottom:3 }}>{d.label}</div>
+                  <div style={{ fontSize:11, color:BRAND.ink400, lineHeight:1.5 }}>{d.desc}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
