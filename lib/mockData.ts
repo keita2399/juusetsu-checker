@@ -1,6 +1,8 @@
 export type RiskItem  = { id: string; title: string; summary: string; detail: string; question?: string };
 export type WatchItem = { id: string; title: string; summary: string; question?: string };
 
+export type CalcItem = { label: string; value: string };
+
 export type AnalyzeResult = {
   doc: string;
   date: string;
@@ -8,6 +10,7 @@ export type AnalyzeResult = {
   watches: WatchItem[];
   oks: string[];
   questions: string[];
+  calculation?: CalcItem[];
 };
 
 export const MOCK_RESULTS: AnalyzeResult = {

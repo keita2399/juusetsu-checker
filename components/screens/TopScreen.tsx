@@ -3,12 +3,14 @@ import { useState, useRef } from 'react';
 import { BRAND, FONT_SANS, FONT_DISP } from '@/lib/brand';
 import { Icon, ICONS } from '@/components/ui/Icon';
 
-export type DocType = 'juusetsu' | 'chinshaku' | 'touki';
+export type DocType = 'juusetsu' | 'chinshaku' | 'touki' | 'joto' | 'fudosan_shotoku';
 
 const DOC_TYPES: { value: DocType; label: string; desc: string }[] = [
-  { value: 'juusetsu',  label: '重要事項説明書', desc: '売買・賃貸契約前の法定書類' },
-  { value: 'chinshaku', label: '賃貸借契約書',   desc: '特約・退去費用・禁止事項を確認' },
-  { value: 'touki',     label: '登記簿謄本',     desc: '権利関係・抵当権・差押えを確認' },
+  { value: 'juusetsu',        label: '重要事項説明書',   desc: '売買・賃貸契約前の法定書類' },
+  { value: 'chinshaku',       label: '賃貸借契約書',     desc: '特約・退去費用・禁止事項を確認' },
+  { value: 'touki',           label: '登記簿謄本',       desc: '権利関係・抵当権・差押えを確認' },
+  { value: 'joto',            label: '譲渡所得計算',     desc: '売買契約書から譲渡所得を自動計算' },
+  { value: 'fudosan_shotoku', label: '不動産所得申告',   desc: '賃貸収支から必要経費・所得を整理' },
 ];
 
 interface TopScreenProps { onStart: (file: File, docType: DocType) => void; }
@@ -74,7 +76,7 @@ export function TopScreen({ onStart }: TopScreenProps) {
           </div>
 
           {/* Doc type selector */}
-          <div style={{ display:'flex', gap:8, marginBottom:24 }}>
+          <div style={{ display:'flex', flexWrap:'wrap', gap:8, marginBottom:24 }}>
             {DOC_TYPES.map(d => (
               <button key={d.value} onClick={() => setDocType(d.value)} style={{
                 flex:1, padding:'12px 8px', border:`2px solid ${docType === d.value ? BRAND.navy : BRAND.border}`,

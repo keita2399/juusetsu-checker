@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { BRAND, FONT_SANS, FONT_DISP, FONT_NUM } from '@/lib/brand';
 import { Icon, ICONS } from '@/components/ui/Icon';
-import { AnalyzeResult, RiskItem, WatchItem } from '@/lib/mockData';
+import { AnalyzeResult, RiskItem, WatchItem, CalcItem } from '@/lib/mockData';
 import { QuestionsModal } from '@/components/screens/QuestionsModal';
 import { PrintLayout } from '@/components/screens/PrintLayout';
 
@@ -80,6 +80,26 @@ export function ResultScreen({ result: d, onBack }: ResultScreenProps) {
 
         {/* Left: item list */}
         <div className="result-list">
+
+          {/* Calculation table (tax types) */}
+          {d.calculation && d.calculation.length > 0 && (
+            <>
+              <div style={{ padding:'0 16px 8px', fontSize:11, fontWeight:700, color:BRAND.ink400, letterSpacing:'.06em' }}>
+                計算結果
+              </div>
+              {d.calculation.map((item: CalcItem, i: number) => (
+                <div key={i} style={{
+                  padding:'8px 16px', display:'flex', justifyContent:'space-between',
+                  alignItems:'baseline', gap:8,
+                  borderBottom: `1px solid ${BRAND.border}`,
+                }}>
+                  <div style={{ fontSize:12, color:BRAND.ink500, flexShrink:0 }}>{item.label}</div>
+                  <div style={{ fontSize:13, fontWeight:700, color:BRAND.ink800, textAlign:'right' }}>{item.value}</div>
+                </div>
+              ))}
+              <div style={{ height:8 }}/>
+            </>
+          )}
 
           {/* Risks */}
           <div style={{ padding:'0 16px 8px', fontSize:11, fontWeight:700, color:BRAND.ink400, letterSpacing:'.06em' }}>
