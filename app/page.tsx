@@ -1,6 +1,6 @@
 'use client';
 import { useState, useRef } from 'react';
-import { TopScreen } from '@/components/screens/TopScreen';
+import { TopScreen, DocType } from '@/components/screens/TopScreen';
 import { AnalyzingScreen } from '@/components/screens/AnalyzingScreen';
 import { ResultScreen } from '@/components/screens/ResultScreen';
 import { AnalyzeResult, MOCK_RESULTS } from '@/lib/mockData';
@@ -18,7 +18,7 @@ export default function Home() {
     if (animDone.current && apiDone.current) setScreen('result');
   };
 
-  const handleStart = async (file: File) => {
+  const handleStart = async (file: File, docType: DocType) => {
     setError(null);
     animDone.current = false;
     apiDone.current = false;
@@ -27,6 +27,7 @@ export default function Home() {
     try {
       const formData = new FormData();
       formData.append('file', file);
+      formData.append('docType', docType);
 
       const res = await fetch('/api/analyze', { method: 'POST', body: formData });
       const data = await res.json();

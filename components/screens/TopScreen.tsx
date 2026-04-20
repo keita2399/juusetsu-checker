@@ -3,10 +3,19 @@ import { useState, useRef } from 'react';
 import { BRAND, FONT_SANS, FONT_DISP } from '@/lib/brand';
 import { Icon, ICONS } from '@/components/ui/Icon';
 
-interface TopScreenProps { onStart: (file: File) => void; }
+export type DocType = 'juusetsu' | 'chinshaku' | 'touki';
+
+const DOC_TYPES: { value: DocType; label: string; desc: string }[] = [
+  { value: 'juusetsu',  label: '重要事項説明書', desc: '売買・賃貸契約前の法定書類' },
+  { value: 'chinshaku', label: '賃貸借契約書',   desc: '特約・退去費用・禁止事項を確認' },
+  { value: 'touki',     label: '登記簿謄本',     desc: '権利関係・抵当権・差押えを確認' },
+];
+
+interface TopScreenProps { onStart: (file: File, docType: DocType) => void; }
 
 export function TopScreen({ onStart }: TopScreenProps) {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [docType, setDocType] = useState<DocType>('juusetsu');
   const [dragging, setDragging] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -21,6 +30,8 @@ export function TopScreen({ onStart }: TopScreenProps) {
     if (file) handleFile(file);
   };
 
+  const selectedDoc = DOC_TYPES.find(d => d.value === docType)!;
+
   return (
     <div style={{ minHeight:'100dvh', display:'flex', flexDirection:'column', background:'#F8FAFB', fontFamily:FONT_SANS }}>
 
@@ -28,10 +39,10 @@ export function TopScreen({ onStart }: TopScreenProps) {
       <div style={{ borderBottom:`1px solid ${BRAND.border}`, background:'#fff', padding:'0 48px' }}>
         <div style={{ maxWidth:1200, margin:'0 auto', height:64, display:'flex', alignItems:'center', justifyContent:'space-between' }}>
           <div style={{ fontFamily:FONT_DISP, fontSize:18, fontWeight:900, color:BRAND.navyD, letterSpacing:'-.01em' }}>
-            重説チェッカー
+            不動産書類チェッカー
           </div>
           <div style={{ fontSize:13, color:BRAND.ink400 }}>
-            AIによる重要事項説明書解析システム
+            AIによる不動産書類解析システム
           </div>
         </div>
       </div>
@@ -41,7 +52,7 @@ export function TopScreen({ onStart }: TopScreenProps) {
         <div style={{ width:'100%', maxWidth:680 }}>
 
           {/* Hero */}
-          <div style={{ textAlign:'center', marginBottom:48 }}>
+          <div style={{ textAlign:'center', marginBottom:40 }}>
             <div style={{
               display:'inline-flex', alignItems:'center', gap:6, padding:'5px 14px',
               background:BRAND.info.bg, color:BRAND.info.fg,
@@ -54,12 +65,30 @@ export function TopScreen({ onStart }: TopScreenProps) {
               fontFamily:FONT_DISP, fontSize:40, fontWeight:900, lineHeight:1.2,
               color:BRAND.ink800, margin:'0 0 16px', letterSpacing:'-0.02em',
             }}>
-              重要事項説明書を<br/>AIで分かりやすく解説
+              不動産書類を<br/>AIで分かりやすく解説
             </h1>
             <p style={{ fontSize:16, color:BRAND.ink500, lineHeight:1.7, margin:0 }}>
               PDFをアップロードするだけで、リスク・注意点・確認事項を整理します。<br/>
               お客様への説明をより透明に、より丁寧に。
             </p>
+          </div>
+
+          {/* Doc type selector */}
+          <div style={{ display:'flex', gap:8, marginBottom:24 }}>
+            {DOC_TYPES.map(d => (
+              <button key={d.value} onClick={() => setDocType(d.value)} style={{
+                flex:1, padding:'12px 8px', border:`2px solid ${docType === d.value ? BRAND.navy : BRAND.border}`,
+                borderRadius:12, background: docType === d.value ? BRAND.info.bg : '#fff',
+                cursor:'pointer', fontFamily:FONT_SANS, transition:'all .15s',
+              }}>
+                <div style={{ fontSize:13, fontWeight:800, color: docType === d.value ? BRAND.navy : BRAND.ink700, marginBottom:3 }}>
+                  {d.label}
+                </div>
+                <div style={{ fontSize:11, color: docType === d.value ? BRAND.info.fg : BRAND.ink400, lineHeight:1.4 }}>
+                  {d.desc}
+                </div>
+              </button>
+            ))}
           </div>
 
           {/* Dropzone */}
@@ -110,7 +139,7 @@ export function TopScreen({ onStart }: TopScreenProps) {
 
           {/* CTA */}
           <button
-            onClick={() => selectedFile && onStart(selectedFile)}
+            onClick={() => selectedFile && onStart(selectedFile, docType)}
             disabled={!selectedFile}
             style={{
               width:'100%', marginTop:16, padding:'18px', border:'none', borderRadius:14,
@@ -122,7 +151,7 @@ export function TopScreen({ onStart }: TopScreenProps) {
             }}
           >
             <Icon d={ICONS.sparkle} size={20} stroke={selectedFile ? '#fff' : BRAND.ink400} sw={1.8}/>
-            {selectedFile ? `「${selectedFile.name}」を解析する` : 'PDFを選択してください'}
+            {selectedFile ? `「${selectedDoc.label}」を解析する` : 'PDFを選択してください'}
           </button>
 
           {/* Privacy */}
