@@ -1,7 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { GoogleGenAI } from '@google/genai';
+import { ChatGoogleGenerativeAI } from '@langchain/google-genai';
+import { HumanMessage } from '@langchain/core/messages';
 
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY! });
+const model = new ChatGoogleGenerativeAI({
+  model: 'gemini-2.5-flash',
+  apiKey: process.env.GEMINI_API_KEY!,
+});
 
 const PROMPT = `
 あなたは不動産の重要事項説明書を一般の方に分かりやすく解説する専門家です。
@@ -59,20 +63,23 @@ export async function POST(req: NextRequest) {
     const bytes = await file.arrayBuffer();
     const base64 = Buffer.from(bytes).toString('base64');
 
-    const result = await ai.models.generateContent({
-      model: 'gemini-2.5-flash',
-      contents: [
+    const message = new HumanMessage({
+      content: [
         {
-          role: 'user',
-          parts: [
-            { inlineData: { mimeType: 'application/pdf', data: base64 } },
-            { text: PROMPT },
-          ],
+          type: 'media',
+          mimeType: 'application/pdf',
+          data: base64,
+        },
+        {
+          type: 'text',
+          text: PROMPT,
         },
       ],
     });
 
-    const text = (result.text ?? '').trim();
+    const response = await model.invoke([message]);
+    const text = (typeof response.content === 'string' ? response.content : '').trim();
+
     const jsonMatch = text.match(/\{[\s\S]*\}/);
     if (!jsonMatch) {
       return NextResponse.json({ error: 'AIの応答を解析できませんでした' }, { status: 500 });
