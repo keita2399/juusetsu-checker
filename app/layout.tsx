@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "重説チェッカー",
-  description: "重要事項説明書をAIで解析・解説するシステム",
+  title: "不動産書類チェッカー",
+  description: "不動産書類をAIで解析・解説するシステム",
 };
 
 export default function RootLayout({
