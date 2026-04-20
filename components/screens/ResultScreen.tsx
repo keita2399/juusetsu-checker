@@ -13,19 +13,9 @@ type SelectedItem = { item: RiskItem | WatchItem; kind: 'risk' | 'watch' } | nul
 export function ResultScreen({ result: d, onBack }: ResultScreenProps) {
   const [selected, setSelected] = useState<SelectedItem>({ item: d.risks[0], kind: 'risk' });
   const [showQuestions, setShowQuestions] = useState(false);
-  const [copied, setCopied] = useState(false);
 
   const select = (item: RiskItem | WatchItem, kind: 'risk' | 'watch') =>
     setSelected({ item, kind });
-
-  const handleCopy = () => {
-    if (!selected) return;
-    const q = selected.item.question ?? 'この項目について、詳しく説明していただけますか？';
-    navigator.clipboard.writeText(q).then(() => {
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    });
-  };
 
   const isRisk = selected?.kind === 'risk';
 
@@ -173,20 +163,9 @@ export function ResultScreen({ result: d, onBack }: ResultScreenProps) {
                 <div style={{ fontSize:12, fontWeight:700, color: isRisk ? BRAND.risk.fg : BRAND.watch.fg, letterSpacing:'.05em', marginBottom:12 }}>
                   担当者にこう聞いてみましょう
                 </div>
-                <p style={{ margin:'0 0 16px', fontSize:15, color:BRAND.ink800, lineHeight:1.8, fontWeight:500 }}>
+                <p style={{ margin:0, fontSize:15, color:BRAND.ink800, lineHeight:1.8, fontWeight:500 }}>
                   「{selected.item.question ?? 'この項目について、詳しく説明していただけますか？また、条件の変更は可能でしょうか？'}」
                 </p>
-                <button onClick={handleCopy} style={{
-                  background: copied ? BRAND.ok.fg : '#fff',
-                  border:`1px solid ${copied ? BRAND.ok.fg : BRAND.border}`,
-                  borderRadius:8, padding:'8px 18px', cursor:'pointer',
-                  fontFamily:FONT_SANS, fontWeight:700, fontSize:13,
-                  color: copied ? '#fff' : BRAND.ink600,
-                  display:'flex', alignItems:'center', gap:6, transition:'all .2s',
-                }}>
-                  <Icon d={copied ? ICONS.check : ICONS.clip} size={14} stroke={copied ? '#fff' : BRAND.ink600} sw={2}/>
-                  {copied ? 'コピーしました' : '質問をコピー'}
-                </button>
               </div>
 
             </div>
