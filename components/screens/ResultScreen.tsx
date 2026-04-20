@@ -36,7 +36,7 @@ export function ResultScreen({ result: d, onBack }: ResultScreenProps) {
             </button>
             <div>
               <div style={{ fontFamily:FONT_DISP, fontSize:17, fontWeight:800, color:BRAND.ink800 }}>{d.doc}</div>
-              <div style={{ fontSize:12, color:BRAND.ink400 }}>重要事項説明書 · {d.date}</div>
+              <div style={{ fontSize:12, color:BRAND.ink400 }}>{d.docLabel ?? '不動産書類'} · {d.date}</div>
             </div>
           </div>
 

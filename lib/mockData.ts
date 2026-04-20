@@ -6,6 +6,7 @@ export type CalcItem = { label: string; value: string };
 export type AnalyzeResult = {
   doc: string;
   date: string;
+  docLabel?: string;
   risks: RiskItem[];
   watches: WatchItem[];
   oks: string[];

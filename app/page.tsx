@@ -1,6 +1,6 @@
 'use client';
 import { useState, useRef } from 'react';
-import { TopScreen, DocType } from '@/components/screens/TopScreen';
+import { TopScreen, DocType, DOC_LABELS } from '@/components/screens/TopScreen';
 import { AnalyzingScreen } from '@/components/screens/AnalyzingScreen';
 import { ResultScreen } from '@/components/screens/ResultScreen';
 import { AnalyzeResult, MOCK_RESULTS } from '@/lib/mockData';
@@ -35,7 +35,7 @@ export default function Home() {
       if (!res.ok) throw new Error(data.error || '解析失敗');
 
       const today = new Date().toLocaleDateString('ja-JP', { year:'numeric', month:'2-digit', day:'2-digit' }).replace(/\//g, '.');
-      setResult({ ...data, date: today });
+      setResult({ ...data, date: today, docLabel: DOC_LABELS[docType] });
       apiDone.current = true;
       tryShowResult();
     } catch (err) {

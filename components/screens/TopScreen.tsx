@@ -5,7 +5,7 @@ import { Icon, ICONS } from '@/components/ui/Icon';
 
 export type DocType = 'auto' | 'juusetsu' | 'chinshaku' | 'touki' | 'joto' | 'fudosan_shotoku';
 
-const DOC_LABELS: Record<DocType, string> = {
+export const DOC_LABELS: Record<DocType, string> = {
   auto:            '自動判定',
   juusetsu:        '重要事項説明書',
   chinshaku:       '賃貸借契約書',
