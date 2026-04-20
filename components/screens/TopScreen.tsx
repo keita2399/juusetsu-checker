@@ -3,9 +3,10 @@ import { useState, useRef } from 'react';
 import { BRAND, FONT_SANS, FONT_DISP } from '@/lib/brand';
 import { Icon, ICONS } from '@/components/ui/Icon';
 
-export type DocType = 'juusetsu' | 'chinshaku' | 'touki' | 'joto' | 'fudosan_shotoku';
+export type DocType = 'auto' | 'juusetsu' | 'chinshaku' | 'touki' | 'joto' | 'fudosan_shotoku';
 
 const DOC_TYPES: { value: DocType; label: string; desc: string }[] = [
+  { value: 'auto',            label: '自動判定',         desc: 'AIが書類の種類を自動で判別' },
   { value: 'juusetsu',        label: '重要事項説明書',   desc: '売買・賃貸契約前の法定書類' },
   { value: 'chinshaku',       label: '賃貸借契約書',     desc: '特約・退去費用・禁止事項を確認' },
   { value: 'touki',           label: '登記簿謄本',       desc: '権利関係・抵当権・差押えを確認' },
@@ -17,7 +18,7 @@ interface TopScreenProps { onStart: (file: File, docType: DocType) => void; }
 
 export function TopScreen({ onStart }: TopScreenProps) {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [docType, setDocType] = useState<DocType>('juusetsu');
+  const [docType, setDocType] = useState<DocType>('auto');
   const [dragging, setDragging] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
