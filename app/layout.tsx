@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "不動産書類チェッカー",
-  description: "不動産書類をAIで解析・解説するシステム",
+  title: "不動産書類 AIガイド",
+  description: "不動産書類をAIがわかりやすく解説。重要事項説明書・売買契約書・登記簿などに対応。",
 };
 
 export default function RootLayout({

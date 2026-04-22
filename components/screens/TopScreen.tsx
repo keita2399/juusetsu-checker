@@ -90,10 +90,10 @@ export function TopScreen({ onStart }: TopScreenProps) {
       <div style={{ borderBottom:`1px solid ${BRAND.border}`, background:'#fff', padding:'0 48px' }}>
         <div style={{ maxWidth:1200, margin:'0 auto', height:64, display:'flex', alignItems:'center', justifyContent:'space-between' }}>
           <div style={{ fontFamily:FONT_DISP, fontSize:18, fontWeight:900, color:BRAND.navyD, letterSpacing:'-.01em' }}>
-            不動産書類チェッカー
+            不動産書類 AIガイド
           </div>
           <div style={{ fontSize:13, color:BRAND.ink400 }}>
-            AIによる不動産書類解析システム
+            書類の内容をAIがわかりやすく解説します
           </div>
         </div>
       </div>
